@@ -13,12 +13,11 @@ enum combo_events {
 //  BSPC_LSFT_CLEAR,
   COMBO_LENGTH
 };
-uint16_t COMBO_LEN = COMBO_LENGTH; // remove the COMBO_COUNT define and use this instead!
 
 const uint16_t PROGMEM jk_combo[] = {LSFT_T(KC_J), LCTL_T(KC_K), COMBO_END};
 //const uint16_t PROGMEM qw_combo[] = {KC_Q, KC_W, COMBO_END};
 
-combo_t key_combos[COMBO_LEN] = {
+combo_t key_combos[COMBO_COUNT] = {
   [JK_ESC] = COMBO(jk_combo, KC_ESC),
   // [JK_TAB] = COMBO(jk_combo, KC_ESC),
   // [QW_SFT] = COMBO(qw_combo, KC_LSFT)
