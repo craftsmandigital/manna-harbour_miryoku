@@ -10,16 +10,15 @@
 // combos stuff
 enum combo_events {
   JK_ESC,
-//  BSPC_LSFT_CLEAR,
-  COMBO_LENGTH
+  DF_TAB,
 };
 
 const uint16_t PROGMEM jk_combo[] = {LSFT_T(KC_J), LCTL_T(KC_K), COMBO_END};
-//const uint16_t PROGMEM qw_combo[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM df_combo[] = {LSFT_T(KC_F), LCTL_T(KC_D), COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [JK_ESC] = COMBO(jk_combo, KC_ESC),
-  // [JK_TAB] = COMBO(jk_combo, KC_ESC),
+  [DF_TAB] = COMBO(df_combo, KC_TAB),
   // [QW_SFT] = COMBO(qw_combo, KC_LSFT)
   // [SD_LAYER] = COMBO(layer_combo, MO(_LAYER)),
 };
