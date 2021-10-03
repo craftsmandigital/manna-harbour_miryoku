@@ -1,5 +1,5 @@
 COMBO_ENABLE = yes
-
+UNICODE_ENABLE = yes
 
 # Copyright 2019 Manna Harbour
 # https://github.com/manna-harbour/miryoku
