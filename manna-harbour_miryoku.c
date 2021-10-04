@@ -17,19 +17,22 @@ enum combo_events {
   JK_ESC,
   DF_TAB,
   NAV_TOGLE,
-  SYM_TOGLE,  
+  SYM_TOGLE,
+  NUM_TOGLE,  
 };
 
-const uint16_t PROGMEM jk_combo[] = {LSFT_T(KC_J), LCTL_T(KC_K), COMBO_END};
-const uint16_t PROGMEM df_combo[] = {LSFT_T(KC_F), LCTL_T(KC_D), COMBO_END};
-const uint16_t PROGMEM nav_combo[] = {LT(NAV, KC_SPC), LT(NUM, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM sym_combo[] = {LT(NAV, KC_SPC), OSL(SYM), COMBO_END};
+const uint16_t PROGMEM jk_combo[] =  {LSFT_T(KC_J),		LCTL_T(KC_K),	COMBO_END};
+const uint16_t PROGMEM df_combo[] =  {LSFT_T(KC_F), 	LCTL_T(KC_D),	COMBO_END};
+const uint16_t PROGMEM nav_combo[] = {LT(NAV, KC_SPC),	LSFT_T(KC_J),	COMBO_END};
+const uint16_t PROGMEM sym_combo[] = {LSFT_T(KC_F),		OSL(SYM),		COMBO_END};
+const uint16_t PROGMEM num_combo[] = {LSFT_T(KC_F),		LT(NUM, KC_BSPC), COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [JK_ESC] = COMBO(jk_combo, KC_ESC),
   [DF_TAB] = COMBO(df_combo, KC_TAB),
   [NAV_TOGLE] = COMBO(nav_combo, TG(NAV)),
   [SYM_TOGLE] = COMBO(sym_combo, TG(SYM)),
+  [NUM_TOGLE] = COMBO(num_combo, TG(NUM)),
   // [QW_SFT] = COMBO(qw_combo, KC_LSFT)
   // [SD_LAYER] = COMBO(layer_combo, MO(_LAYER)),
 };
@@ -228,10 +231,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     U_NP,    U_NP,    KC_BTN2, KC_BTN3, KC_BTN1, KC_BTN1, KC_BTN3, KC_BTN2, U_NP,    U_NP
   ),
   [NUM] = LAYOUT_miryoku(
-    KC_LBRC, KC_7,    KC_8,    KC_9,    KC_RBRC, U_NA,    U_NA,    U_NA,    U_NA,    RESET,
-    KC_SCLN, KC_4,    KC_5,    KC_6,    KC_EQL,  U_NA,    KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
-    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_BSLS, U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
-    U_NP,    U_NP,    KC_DOT,  KC_0,    KC_MINS, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
+    KC_PLUS, KC_7,    KC_8,    KC_9,    KC_ASTR, U_NA,    U_NA,    U_NA,    U_NA,    RESET,
+    KC_MINS, KC_4,    KC_5,    KC_6,    KC_SLSH, U_NA,    KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
+    KC_PERC, KC_1,    KC_2,    KC_3,    KC_EQL , U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
+    U_NP,    U_NP,    U_NA,    KC_0,    KC_DOT,  U_NA,    TG(NUM), U_NA,    U_NP,    U_NP
   ),
   [SYM] = LAYOUT_miryoku(
 	KC_PLUS, KC_EXLM, KC_SCLN, KC_QUOT, KC_ASTR, KC_CIRC, KC_TILD, KC_HASH, KC_UNDS, KC_AMPR,

@@ -1,5 +1,5 @@
 
-#define COMBO_COUNT 4
+#define COMBO_COUNT 5
 // Copyright 2019 Manna Harbour
 // https://github.com/manna-harbour/miryoku
 // generated from users/manna-harbour_miryoku/miryoku.org  -*- buffer-read-only: t -*-
@@ -24,7 +24,7 @@
 #define AUTO_SHIFT_NO_SETUP
 
 // Recommended for heavy chording.
-#define QMK_KEYS_PER_SCAN 4
+#define QMK_KEYS_PER_SCAN 5
 
 // Mouse key speed and acceleration.
 #undef MOUSEKEY_DELAY
