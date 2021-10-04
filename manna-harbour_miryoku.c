@@ -6,19 +6,21 @@
 
 #include "manna-harbour_miryoku.h"
 
-#define _OE UC(0x00D8)
-#define _oe UC(0x00F8)
-#define _AE UC(0x00c6)
-#define _AA UC(0x00c5)
-#define _ae UC(0x00e6)
-#define _aa UC(0x00E5)
+#define _OE UC(0x00D8) // Ø
+#define _oe UC(0x00F8) // ø
+#define _AE UC(0x00c6) // Æ
+#define _AA UC(0x00c5) // Å
+#define _ae UC(0x00e6) // æ
+#define _aa UC(0x00E5) // å
+
 // combos stuff
 enum combo_events {
   JK_ESC,
   DF_TAB,
   NAV_TOGLE,
   SYM_TOGLE,
-  NUM_TOGLE,  
+  NUM_TOGLE,
+  MOUSE_TOGLE,
 };
 
 const uint16_t PROGMEM jk_combo[] =  {LSFT_T(KC_J),		LCTL_T(KC_K),	COMBO_END};
@@ -26,6 +28,8 @@ const uint16_t PROGMEM df_combo[] =  {LSFT_T(KC_F), 	LCTL_T(KC_D),	COMBO_END};
 const uint16_t PROGMEM nav_combo[] = {LT(NAV, KC_SPC),	LSFT_T(KC_J),	COMBO_END};
 const uint16_t PROGMEM sym_combo[] = {LSFT_T(KC_F),		OSL(SYM),		COMBO_END};
 const uint16_t PROGMEM num_combo[] = {LSFT_T(KC_F),		LT(NUM, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM mouse_combo[] = {LT(MOUSE, KC_DOT),LSFT_T(KC_J), COMBO_END};
+
 
 combo_t key_combos[COMBO_COUNT] = {
   [JK_ESC] = COMBO(jk_combo, KC_ESC),
@@ -33,6 +37,7 @@ combo_t key_combos[COMBO_COUNT] = {
   [NAV_TOGLE] = COMBO(nav_combo, TG(NAV)),
   [SYM_TOGLE] = COMBO(sym_combo, TG(SYM)),
   [NUM_TOGLE] = COMBO(num_combo, TG(NUM)),
+  [MOUSE_TOGLE] = COMBO(mouse_combo, TG(MOUSE)),
   // [QW_SFT] = COMBO(qw_combo, KC_LSFT)
   // [SD_LAYER] = COMBO(layer_combo, MO(_LAYER)),
 };
@@ -175,7 +180,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,               KC_I,              KC_O,             KC_P,
     LGUI_T(KC_A),      LALT_T(KC_S),      LCTL_T(KC_D),      LSFT_T(KC_F),      KC_G,              KC_H,              LSFT_T(KC_J),      LCTL_T(KC_K),      LALT_T(KC_L),      _oe,
     KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_COMM,           _aa,               _ae,
-    U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(FUN, KC_ENT),   LT(NUM, KC_BSPC),  OSL(SYM),          U_NP,              U_NP
+    U_NP,              U_NP,              LT(MEDIA, KC_COMM),LT(NAV, KC_SPC),   LT(MOUSE, KC_DOT), LT(FUN, KC_ENT),   LT(NUM, KC_BSPC),  OSL(SYM),          U_NP,              U_NP
   #else
     KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,
     LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_G,              KC_M,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
@@ -194,7 +199,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,
     KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA,    KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, U_NU,
     U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, U_NU,
-    U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_BTN1, KC_BTN3, KC_BTN2, U_NP,    U_NP
+    U_NP,    U_NP,    U_NA,    U_NA,    TG(MOUSE),KC_BTN1,KC_BTN3, KC_BTN2, U_NP,    U_NP
   ),
   [MEDIA] = LAYOUT_miryoku(
     RESET,   U_NA,    U_NA,    U_NA,    U_NA,    RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI,
