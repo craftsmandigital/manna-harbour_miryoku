@@ -1,5 +1,5 @@
 
-#define COMBO_COUNT 3
+#define COMBO_COUNT 4
 // Copyright 2019 Manna Harbour
 // https://github.com/manna-harbour/miryoku
 // generated from users/manna-harbour_miryoku/miryoku.org  -*- buffer-read-only: t -*-
