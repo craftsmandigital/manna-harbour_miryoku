@@ -44,6 +44,38 @@ combo_t key_combos[COMBO_COUNT] = {
 
 
 
+LEADER_EXTERNS();
+
+void matrix_scan_user(void) {
+  LEADER_DICTIONARY() {
+    leading = false;
+    leader_end();
+	
+	SEQ_ONE_KEY(KC_X) {
+      // Anything you can do in a macro.
+	  register_code(KC_LCTRL);
+      register_code(KC_F4);
+      unregister_code(KC_F4);
+      unregister_code(KC_LCTRL);
+      // SEND_STRING(SS_DOWN(KC_LCTRL)SS_TAP(KC_F4)SS_UP(KC_LCTL));
+    }
+
+    SEQ_ONE_KEY(KC_Q) {	  
+	  register_code(KC_LALT);
+      register_code(KC_F4);
+      unregister_code(KC_F4);
+      unregister_code(KC_LALT);
+    }
+    SEQ_TWO_KEYS(KC_X, KC_X) {
+      SEND_STRING(SS_LCTL(SS_LSFT("t")));
+    }
+  }
+}
+
+
+
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #if defined MIRYOKU_LAYERS_FLIP
   [BASE] = LAYOUT_miryoku(
@@ -179,7 +211,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   #elif defined MIRYOKU_ALPHAS_QWERTY
     KC_Q,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,               KC_I,              KC_O,             KC_P,
     LGUI_T(KC_A),      LALT_T(KC_S),      LCTL_T(KC_D),      LSFT_T(KC_F),      KC_G,              KC_H,              LSFT_T(KC_J),      LCTL_T(KC_K),      LALT_T(KC_L),      _oe,
-    KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_COMM,           _aa,               _ae,
+    KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_LEAD,           _aa,               _ae,
     U_NP,              U_NP,              LT(MEDIA, KC_COMM),LT(NAV, KC_SPC),   LT(MOUSE, KC_DOT), LT(FUN, KC_ENT),   LT(NUM, KC_BSPC),  OSL(SYM),          U_NP,              U_NP
   #else
     KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,

@@ -1,3 +1,5 @@
+#define LEADER_PER_KEY_TIMING
+#define LEADER_TIMEOUT 250
 
 #define COMBO_COUNT 6
 // Copyright 2019 Manna Harbour
