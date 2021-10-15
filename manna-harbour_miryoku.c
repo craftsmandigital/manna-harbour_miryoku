@@ -26,8 +26,10 @@ enum combo_events {
 // Macro stuff
 enum custom_keycodes {
 	PAREN = SAFE_RANGE,
-    // QMKURL,
-    // MY_OTHER_MACRO,
+    BRACKET,
+    CURLEY,
+	QUOT,
+	DQUOT,
 };
 
 // --------------------------------------------------------------------------------
@@ -90,26 +92,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             // when key ( is pressed
             SEND_STRING("()"SS_TAP(X_LEFT));
-        } else {
-            // when keycode QMKBEST is released
+        }
+        break;
+    case BRACKET:
+        if (record->event.pressed) {
+			// when key [ is pressed
+            SEND_STRING("[]"SS_TAP(X_LEFT));
+        }
+        break;
+    case CURLEY:
+        if (record->event.pressed) {
+            // when key { is pressed
+            SEND_STRING("{}"SS_TAP(X_LEFT));
+        }
+        break;
+    case QUOT:
+        if (record->event.pressed) {
+            // when key ' is pressed
+            SEND_STRING("''"SS_TAP(X_LEFT));
+        }
+        break;
+    case DQUOT:
+        if (record->event.pressed) {
+            // when key " is pressed
+            SEND_STRING("\"\""SS_TAP(X_LEFT));
         }
         break;
 
-/*    case QMKURL:
-        if (record->event.pressed) {
-            // when keycode QMKURL is pressed
-            SEND_STRING("https://qmk.fm/\n");
-        } else {
-            // when keycode QMKURL is released
-        }
-        break;
-
-    case MY_OTHER_MACRO:
-        if (record->event.pressed) {
-           SEND_STRING(SS_LCTL("ac")); // selects all and copies
-        }
-        break;
-*/
     }
     return true;
 };
@@ -314,8 +323,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     U_NP,    U_NP,    U_NA,    KC_0,    KC_DOT,  U_NA,    TG(NUM), U_NA,    U_NP,    U_NP
   ),
   [SYM] = LAYOUT_miryoku(
-	KC_PLUS, KC_EXLM, KC_SCLN, KC_QUOT, KC_ASTR, KC_CIRC, KC_TILD, KC_HASH, KC_UNDS, KC_AMPR,
-	KC_MINS, KC_QUES, KC_COLN, KC_DQUO, KC_SLSH, KC_LCBR, PAREN, KC_LBRC, KC_DLR,  _OE,
+	KC_PLUS, KC_EXLM, KC_SCLN, QUOT,    KC_ASTR, KC_CIRC, KC_TILD, KC_HASH, KC_UNDS, KC_AMPR,
+	KC_MINS, KC_QUES, KC_COLN, DQUOT,   KC_SLSH, CURLEY,  PAREN,   BRACKET, KC_DLR,  _OE,
 	KC_PERC, KC_TRNS, KC_TRNS, KC_GRV,  KC_EQL,  KC_RCBR, KC_RPRN, KC_RBRC, _AA,     _AE,
 	U_NP,    U_NP,    KC_PIPE, KC_BSLS, KC_LT,   KC_GT,   KC_AT,   TG(SYM), U_NP,    U_NP
   ),
