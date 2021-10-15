@@ -12,7 +12,7 @@
 #define _AA UC(0x00c5) // Å
 #define _ae UC(0x00e6) // æ
 #define _aa UC(0x00E5) // å
-
+// --------------------------------------------------------------------------------
 // combos stuff
 enum combo_events {
   JK_ESC,
@@ -23,6 +23,15 @@ enum combo_events {
   MOUSE_TOGLE,
 };
 
+// Macro stuff
+enum custom_keycodes {
+	PAREN = SAFE_RANGE,
+    // QMKURL,
+    // MY_OTHER_MACRO,
+};
+
+// --------------------------------------------------------------------------------
+// combos stuff
 const uint16_t PROGMEM jk_combo[] =  {LSFT_T(KC_J),		LCTL_T(KC_K),	COMBO_END};
 const uint16_t PROGMEM df_combo[] =  {LSFT_T(KC_F), 	LCTL_T(KC_D),	COMBO_END};
 const uint16_t PROGMEM nav_combo[] = {LT(NAV, KC_SPC),	LSFT_T(KC_J),	COMBO_END};
@@ -42,8 +51,8 @@ combo_t key_combos[COMBO_COUNT] = {
   // [SD_LAYER] = COMBO(layer_combo, MO(_LAYER)),
 };
 
-
-
+// --------------------------------------------------------------------------------
+// Leader stuff
 LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
@@ -73,9 +82,40 @@ void matrix_scan_user(void) {
 }
 
 
+// --------------------------------------------------------------------------------
+// Macro stuff
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case PAREN:
+        if (record->event.pressed) {
+            // when key ( is pressed
+            SEND_STRING("()"SS_TAP(X_LEFT));
+        } else {
+            // when keycode QMKBEST is released
+        }
+        break;
+
+/*    case QMKURL:
+        if (record->event.pressed) {
+            // when keycode QMKURL is pressed
+            SEND_STRING("https://qmk.fm/\n");
+        } else {
+            // when keycode QMKURL is released
+        }
+        break;
+
+    case MY_OTHER_MACRO:
+        if (record->event.pressed) {
+           SEND_STRING(SS_LCTL("ac")); // selects all and copies
+        }
+        break;
+*/
+    }
+    return true;
+};
 
 
-
+// --------------------------------------------------------------------------------
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #if defined MIRYOKU_LAYERS_FLIP
   [BASE] = LAYOUT_miryoku(
@@ -275,7 +315,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [SYM] = LAYOUT_miryoku(
 	KC_PLUS, KC_EXLM, KC_SCLN, KC_QUOT, KC_ASTR, KC_CIRC, KC_TILD, KC_HASH, KC_UNDS, KC_AMPR,
-	KC_MINS, KC_QUES, KC_COLN, KC_DQUO, KC_SLSH, KC_LCBR, KC_LPRN, KC_LBRC, KC_DLR,  _OE,
+	KC_MINS, KC_QUES, KC_COLN, KC_DQUO, KC_SLSH, KC_LCBR, PAREN, KC_LBRC, KC_DLR,  _OE,
 	KC_PERC, KC_TRNS, KC_TRNS, KC_GRV,  KC_EQL,  KC_RCBR, KC_RPRN, KC_RBRC, _AA,     _AE,
 	U_NP,    U_NP,    KC_PIPE, KC_BSLS, KC_LT,   KC_GT,   KC_AT,   TG(SYM), U_NP,    U_NP
   ),
