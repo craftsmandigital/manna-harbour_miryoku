@@ -12,6 +12,9 @@
 #define _AA UC(0x00c5) // Å
 #define _ae UC(0x00e6) // æ
 #define _aa UC(0x00E5) // å
+
+uint16_t my_end_timer = 0;
+
 // --------------------------------------------------------------------------------
 // combos stuff
 enum combo_events {
@@ -30,6 +33,7 @@ enum custom_keycodes {
     CURLEY,
 	QUOT,
 	DQUOT,
+	MY_END,
 };
 
 // --------------------------------------------------------------------------------
@@ -93,6 +97,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             // when key ( is pressed
             SEND_STRING("()"SS_TAP(X_LEFT));
         }
+        break;
+    case MY_END:
+        if (record->event.pressed) {
+            my_end_timer = timer_read();
+        } else {
+			if (timer_elapsed(my_end_timer) > 1000) {
+				SEND_STRING("X");
+			} else {
+				SEND_STRING("Y");
+			}
+		}
         break;
     case BRACKET:
         if (record->event.pressed) {
@@ -258,7 +273,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
   //---------------------------------------------------- START ------------------------------------------------------------------------------------------
   #elif defined MIRYOKU_ALPHAS_QWERTY
-    KC_Q,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,               KC_I,              KC_O,             KC_P,
+    MY_END,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,               KC_I,              KC_O,             KC_P,
     LGUI_T(KC_A),      LALT_T(KC_S),      LCTL_T(KC_D),      LSFT_T(KC_F),      KC_G,              KC_H,              LSFT_T(KC_J),      LCTL_T(KC_K),      LALT_T(KC_L),      _oe,
     KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_LEAD,           _aa,               _ae,
     U_NP,              U_NP,              LT(MEDIA, KC_COMM),LT(NAV, KC_SPC),   LT(MOUSE, KC_DOT), LT(FUN, KC_ENT),   LT(NUM, KC_BSPC),  OSL(SYM),          U_NP,              U_NP
