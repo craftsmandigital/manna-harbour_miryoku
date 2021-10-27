@@ -6,6 +6,9 @@
 
 #include "manna-harbour_miryoku.h"
 
+// The following unicode stuff is dependent on the
+// windows app "WinCompose" is running in the background
+// https://github.com/samhocevar/wincompose
 #define _OE UC(0x00D8) // Ø
 #define _oe UC(0x00F8) // ø
 #define _AE UC(0x00c6) // Æ
@@ -295,7 +298,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
   //---------------------------------------------------- START ------------------------------------------------------------------------------------------
   #elif defined MIRYOKU_ALPHAS_QWERTY
-    MY_SHIFT_NUM,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,               KC_I,              KC_O,             KC_P,
+    KC_Q,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,               KC_I,              KC_O,             KC_P,
     LGUI_T(KC_A),      LALT_T(KC_S),      LCTL_T(KC_D),      LSFT_T(KC_F),      KC_G,              KC_H,              LSFT_T(KC_J),      LCTL_T(KC_K),      LALT_T(KC_L),      _oe,
     KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_LEAD,           _aa,               _ae,
     U_NP,              U_NP,              LT(MEDIA, KC_COMM),LT(NAV, KC_SPC),   LT(MOUSE, KC_DOT), LT(FUN, KC_ENT),   LT(NUM, KC_BSPC),  OSL(SYM),          U_NP,              U_NP
