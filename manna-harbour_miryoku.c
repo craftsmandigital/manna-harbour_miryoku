@@ -16,7 +16,7 @@
 #define _ae UC(0x00e6) // æ
 #define _aa UC(0x00E5) // å
 
-uint16_t my_end_timer = 0;
+uint16_t my_key_pressed_timer = 0;
 
 // --------------------------------------------------------------------------------
 // combos stuff
@@ -38,6 +38,9 @@ enum custom_keycodes {
 	QUOT,
 	DQUOT,
 	MY_END,
+	MY_HOME,
+	MY_PGUP,
+	MY_PGDN,
 	MY_GUI_NUM,
 };
 
@@ -105,18 +108,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             SEND_STRING("()"SS_TAP(X_LEFT));
         }
         break;
-
-    case MY_END:
-        if (record->event.pressed) {
-            my_end_timer = timer_read();
-        } else {
-			if (timer_elapsed(my_end_timer) > 1000) {
-				SEND_STRING("X");
-			} else {
-				SEND_STRING("Y");
-			}
-		}
-        break;
     case BRACKET:
         if (record->event.pressed) {
 			// when key [ is pressed
@@ -141,7 +132,63 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             SEND_STRING("\"\""SS_TAP(X_LEFT));
         }
         break;
-
+	// The four next keys goes to their extremes on long tapp
+	// and do shorter travel on short press
+    case MY_END:
+        if (record->event.pressed) {
+            my_key_pressed_timer = timer_read();
+        } else {
+			// goes by word to the right when short pressed.
+			if (timer_elapsed(my_key_pressed_timer) < LEADER_TIMEOUT) {
+				register_code(KC_LCTL);
+				tap_code(KC_RGHT);
+				unregister_code(KC_LCTL);
+			} else {
+				// goes to end of line on long press
+				tap_code(KC_END);
+			}
+		}
+        break;
+		case MY_HOME:
+        if (record->event.pressed) {
+            my_key_pressed_timer = timer_read();
+        } else {
+			if (timer_elapsed(my_key_pressed_timer) < LEADER_TIMEOUT) {
+				register_code(KC_LCTL);
+				tap_code(KC_LEFT);
+				unregister_code(KC_LCTL);
+			} else {
+				tap_code(KC_HOME);
+			}
+		}
+        break;
+		case MY_PGDN:
+        if (record->event.pressed) {
+            my_key_pressed_timer = timer_read();
+        } else {
+			if (timer_elapsed(my_key_pressed_timer) < LEADER_TIMEOUT) {
+				tap_code(KC_PGDN);
+			} else {
+				register_code(KC_LCTL);
+				tap_code(KC_END);
+				unregister_code(KC_LCTL);
+				
+			}
+		}
+        break;
+		case MY_PGUP:
+        if (record->event.pressed) {
+            my_key_pressed_timer = timer_read();
+        } else {
+			if (timer_elapsed(my_key_pressed_timer) < LEADER_TIMEOUT) {
+				tap_code(KC_PGUP);
+			} else {
+				register_code(KC_LCTL);
+				tap_code(KC_HOME);
+				unregister_code(KC_LCTL);
+				
+			}
+		}
     }
     return true;
 };
@@ -321,7 +368,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [NAV] = LAYOUT_miryoku(
     RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,
     KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_CAPS,
-    U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_INS,
+    U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    MY_HOME, MY_PGDN, MY_PGUP, MY_END,  KC_INS,
     U_NP,    U_NP,    U_NA,    TG(NAV), U_NA,   KC_ENT,  KC_BSPC, KC_DEL,  U_NP,    U_NP
   ),
   [MOUSE] = LAYOUT_miryoku(
