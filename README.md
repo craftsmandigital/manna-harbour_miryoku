@@ -19,6 +19,14 @@ make lets_split:manna-harbour_miryoku:flash \
 ```
 
 
+## Prerequisites
+
+| App | Description |
+| --- | --- |
+| [WinCompose](https://github.com/samhocevar/wincompose) |  This is required to instal to get norwegian characters as æ ø å to work |
+| [CopyQ](https://github.com/hluk/CopyQ) |  This is not required, but wery handy to browse trough clippboard history |
+| [AutoText](https://www.jitbit.com/autotext/) |  This is not required, but wery handy to create text snippets |
+
 
 ### Sym
 |--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
