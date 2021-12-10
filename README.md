@@ -18,6 +18,19 @@ make lets_split:manna-harbour_miryoku:flash \
            MIRYOKU_CLIPBOARD=WIN # lets'split, extended thumbs
 ```
 
+
+
+### Sym
+|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+|  :---: | :---:  | :---:  | :---:  | :---:  | :---:  | :---:  | :---:  | :---:  | :---:  | :---:  | :---:  |
+| +      |   !    | ;      | ''     |    *   |        |        |   ^    |  ~     |    #   | _      | &      |
+| -      | ?      | :      | ""     | /      |        |        | {}     | ()     | []     |  $     | Ø      |
+| %      | x      | c      | \`     | =      |        |        | }      | )      | ]      | Å      | Æ      |
+|        | U_NP   |  U_NP  | \|     |  \     | <      | >      | @      |OSL(SYM)| U_NP   | U_NP   |        |
+
+
+
+
 ## Personal notes
 ``` text
 Denne kan brukes for å permanent aktivere en layer
