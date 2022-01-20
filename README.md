@@ -1,4 +1,5 @@
 # My miryoku keyboard customization
+This layout may also fitt other keyboards with the [ortho_4x12 layout](https://github.com/qmk/qmk_firmware/tree/master/users/manna-harbour_miryoku#ortho_4x12).
 ## This is customizations for a [Let's split](https://benkyriakou.com/posts/lets-split-keyboard-build) keyboard.
 Content is found in the QMK development environment. In folder `.../qmk_firmware/users/manna-harbour_miryoku`.
 Read more on [Miryoku QMK](https://github.com/qmk/qmk_firmware/tree/master/users/manna-harbour_miryoku). A direct link to readme in the described folder.
