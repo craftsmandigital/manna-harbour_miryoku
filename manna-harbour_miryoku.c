@@ -39,7 +39,9 @@ enum custom_keycodes {
 	DQUOT,
 	MY_END,
 	MY_HOME,
-	MY_PGUP,
+	MY_PASTE,
+	MY_COPY,
+ 	MY_PGUP,
 	MY_PGDN,
 	MY_GUI_NUM,
 };
@@ -160,6 +162,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			} else {
 				tap_code(KC_HOME);
 			}
+		}
+        break;
+		case MY_COPY:
+        if (record->event.pressed) {
+            my_key_pressed_timer = timer_read();
+        } else {
+			if (timer_elapsed(my_key_pressed_timer) < LEADER_TIMEOUT) {
+				register_code(KC_LCTL);
+				tap_code(KC_C);
+				unregister_code(KC_LCTL);
+			} else {
+				register_code(KC_LCTL);
+				tap_code(KC_A);
+				unregister_code(KC_LCTL);
+			}
+		}
+        break;
+		case MY_PASTE:
+        if (record->event.pressed) {
+            my_key_pressed_timer = timer_read();
+        } else {
+			register_code(KC_LCTL);
+			if (timer_elapsed(my_key_pressed_timer) < LEADER_TIMEOUT) {
+				register_code(KC_LSFT);
+				tap_code(KC_V);
+				unregister_code(KC_LSFT);
+			} else {
+				tap_code(KC_V);
+			}
+			unregister_code(KC_LCTL);
 		}
         break;
 		case MY_PGDN:
@@ -366,7 +398,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   #if defined MIRYOKU_NAV_VI
   [NAV] = LAYOUT_miryoku(
-    RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,
+    RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   MY_PASTE,   MY_COPY,   U_CUT,   U_UND,
     KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_CAPS,
     U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    MY_HOME, MY_PGDN, MY_PGUP, MY_END,  KC_INS,
     U_NP,    U_NP,    U_NA,    TG(NAV), U_NA,   KC_ENT,  KC_BSPC, KC_DEL,  U_NP,    U_NP
