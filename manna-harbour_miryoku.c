@@ -44,6 +44,7 @@ enum custom_keycodes {
  	MY_PGUP,
 	MY_PGDN,
 	MY_GUI_NUM,
+	MY_UNDRDO,
 };
 
 // --------------------------------------------------------------------------------
@@ -175,6 +176,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			} else {
 				register_code(KC_LCTL);
 				tap_code(KC_A);
+				unregister_code(KC_LCTL);
+			}
+		}
+		case MY_UNDRDO:
+        if (record->event.pressed) {
+            my_key_pressed_timer = timer_read();
+        } else {
+			if (timer_elapsed(my_key_pressed_timer) < LEADER_TIMEOUT) {
+				register_code(KC_LCTL);
+				tap_code(KC_Z);
+				unregister_code(KC_LCTL);
+			} else {
+				register_code(KC_LCTL);
+				tap_code(KC_Y);
 				unregister_code(KC_LCTL);
 			}
 		}
@@ -383,6 +398,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LGUI_T(KC_A),      LALT_T(KC_S),      LCTL_T(KC_H),      LSFT_T(KC_T),      KC_G,              KC_Y,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_O),      LGUI_T(KC_I),
     KC_Z,              ALGR_T(KC_X),      KC_M,              KC_C,              KC_V,              KC_K,              KC_L,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
+
+
+
+
+
+
+
+
+
+
+
+
   //---------------------------------------------------- START ------------------------------------------------------------------------------------------
   #elif defined MIRYOKU_ALPHAS_QWERTY
     KC_Q,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,               KC_I,              KC_O,             KC_P,
@@ -398,10 +425,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   #if defined MIRYOKU_NAV_VI
   [NAV] = LAYOUT_miryoku(
-    RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   MY_PASTE,   MY_COPY,   U_CUT,   U_UND,
-    KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_CAPS,
-    U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    MY_HOME, MY_PGDN, MY_PGUP, MY_END,  KC_INS,
-    U_NP,    U_NP,    U_NA,    TG(NAV), U_NA,   KC_ENT,  KC_BSPC, KC_DEL,  U_NP,    U_NP
+    RESET,   U_NA,    U_NA,    U_NA,    U_NA,    MY_UNDRDO,MY_PASTE,MY_COPY, U_CUT,   KC_APP,
+    KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA,    KC_LEFT,  KC_DOWN,	KC_UP,   KC_RGHT, KC_CAPS,
+    U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    MY_HOME,  MY_PGDN,	MY_PGUP, MY_END,  KC_INS,
+    U_NP,    U_NP,    U_NA,    TG(NAV), U_NA,    KC_ENT,   KC_BSPC,	KC_DEL,  U_NP,    U_NP
   ),
   [MOUSE] = LAYOUT_miryoku(
     RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,
@@ -416,6 +443,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_MSTP, KC_MPLY, KC_MUTE, U_NP,    U_NP
   ),
   //---------------------------------------------------- END ------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   #else
   [NAV] = LAYOUT_miryoku(
     RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,
