@@ -179,6 +179,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				unregister_code(KC_LCTL);
 			}
 		}
+		break;
 		case MY_UNDRDO:
         if (record->event.pressed) {
             my_key_pressed_timer = timer_read();
