@@ -22,6 +22,14 @@ make lets_split:manna-harbour_miryoku:flash \
            MIRYOKU_NAV=VI \
            MIRYOKU_CLIPBOARD=WIN # lets'split, extended thumbs
 ```
+If you whant more ergonomic for pinkies then move whole pinky columns one key down like this:
+```make
+make lets_split:manna-harbour_miryoku:flash \
+           MIRYOKU_MAPPING=SPLIT \
+           MIRYOKU_ALPHAS=QWERTY \
+           MIRYOKU_NAV=VI \
+           MIRYOKU_CLIPBOARD=WIN # lets'split, extended thumbs
+```
 This layout may also fitt other keyboards with the [ortho_4x12 layout](https://github.com/qmk/qmk_firmware/tree/master/users/manna-harbour_miryoku#ortho_4x12). Read the dockumentation for  the [ortho_4x12 layout](https://github.com/qmk/qmk_firmware/tree/master/users/manna-harbour_miryoku#ortho_4x12). Change the first line of the comand to your choice, for compiling the code to your keyboard.
 
 ## Prerequisites
