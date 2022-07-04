@@ -12,9 +12,9 @@
 #define _OE UC(0x00D8) // Ø
 #define _oe UC(0x00F8) // ø
 #define _AE UC(0x00c6) // Æ
-#define _AA UC(0x00c5) // Å
+// #define _AA UC(0x00c5) // Å
 #define _ae UC(0x00e6) // æ
-#define _aa UC(0x00E5) // å
+// #define _aa UC(0x00E5) // å
 
 uint16_t my_key_pressed_timer = 0;
 
@@ -45,6 +45,8 @@ enum custom_keycodes {
 	MY_PGDN,
 	MY_GUI_NUM,
 	MY_UNDRDO,
+	_AA,
+	_aa,
 };
 
 // --------------------------------------------------------------------------------
@@ -237,6 +239,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				
 			}
 		}
+		break;
+		case _aa	:
+        {
+        
+        if (record->event.pressed) {
+			// https://github.com/qmk/qmk_firmware/blob/master/docs/feature_advanced_keycodes.md#shift--backspace-for-delete-idshift-backspace-for-delete
+			register_code(KC_LGUI);
+			register_code(KC_LALT);
+			register_code(KC_LCTL);
+			// Detect the activation of either shift keys
+            if (get_mods() & MOD_MASK_SHIFT) {
+				register_code(KC_LSFT);
+			}
+			tap_code(KC_A);
+			unregister_code(KC_LGUI);
+			unregister_code(KC_LALT);
+			unregister_code(KC_LCTL);
+			
+                
+			return false;
+            }
+        
+        return true;
+    }
+		break;
     }
     return true;
 };
