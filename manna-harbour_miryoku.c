@@ -98,8 +98,7 @@ void matrix_scan_user(void) {
 // --------------------------------------------------------------------------------
 // Macro stuff
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-	const uint8_t mods = get_mods();
-	const uint8_t oneshot_mods = get_oneshot_mods();
+
     switch (keycode) {
     case PAREN:
         if (record->event.pressed) {
@@ -234,45 +233,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			}
 		}
 		break;
-		// Nordic caracter stuff is dependent of autotekt or other text expander
-		// https://www.jitbit.com/autotext/
-		case _AA	:
+		// Nordic caracter stuff is dependent of autohotkey
+		// https://www.thenickmay.com/how-to-expand-text-for-free-with-autohotkey/
+		// When keypress is shifted then keypress is different the char "-" becoms a "_"
+		// auto hotkey schipt handles this and expand the right nordic character
+		case _AA	:	// å Å
 		if (record->event.pressed) {
-			// https://getreuer.info/posts/keyboards/macros/index.html#arrow-macro-types---or
-			if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {  // Is shift held?
-				del_mods(MOD_MASK_SHIFT);  // Temporarily delete shift.
-				del_oneshot_mods(MOD_MASK_SHIFT);
-				SEND_STRING(" -AA"SS_TAP(X_BSPC));
-				set_mods(mods);            // Restore mods.
-			} else {
-				SEND_STRING(" -aa"SS_TAP(X_BSPC));
-			}
+				SEND_STRING("-&a");  // Becomes _&a when shifted
 		}
 		break;
-		case _AE	:
+		case _AE	:	// æ Æ
 		if (record->event.pressed) {
-			// https://getreuer.info/posts/keyboards/macros/index.html#arrow-macro-types---or
-			if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {  // Is shift held?
-				del_mods(MOD_MASK_SHIFT);  // Temporarily delete shift.
-				del_oneshot_mods(MOD_MASK_SHIFT);
-				SEND_STRING(" -AE"SS_TAP(X_BSPC));
-				set_mods(mods);            // Restore mods.
-			} else {
-				SEND_STRING(" -ae"SS_TAP(X_BSPC));
-			}
+				SEND_STRING("-&e");  // Becomes _&e when shifted
 		}
 		break;
-		case _OE	:
+		case _OE	:	// ø Ø
 		if (record->event.pressed) {
-			// https://getreuer.info/posts/keyboards/macros/index.html#arrow-macro-types---or
-			if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {  // Is shift held?
-				del_mods(MOD_MASK_SHIFT);  // Temporarily delete shift.
-				del_oneshot_mods(MOD_MASK_SHIFT);
-				SEND_STRING(" -OE"SS_TAP(X_BSPC));
-				set_mods(mods);            // Restore mods.
-			} else {
-				SEND_STRING(" -oe"SS_TAP(X_BSPC));
-			}
+				SEND_STRING("-&o");  // Becomes _&o when shifted
 		}
 		break;
     }
