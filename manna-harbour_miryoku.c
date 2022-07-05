@@ -106,6 +106,8 @@ void matrix_scan_user(void) {
 // --------------------------------------------------------------------------------
 // Macro stuff
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+	const uint8_t mods = get_mods();
+	const uint8_t oneshot_mods = get_oneshot_mods();
     switch (keycode) {
     case PAREN:
         if (record->event.pressed) {
@@ -241,28 +243,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		}
 		break;
 		case _aa	:
-        {
-        
-        if (record->event.pressed) {
-			// https://github.com/qmk/qmk_firmware/blob/master/docs/feature_advanced_keycodes.md#shift--backspace-for-delete-idshift-backspace-for-delete
-			register_code(KC_LGUI);
-			register_code(KC_LALT);
-			register_code(KC_LCTL);
-			// Detect the activation of either shift keys
-            if (get_mods() & MOD_MASK_SHIFT) {
-				register_code(KC_LSFT);
+		if (record->event.pressed) {
+			// https://getreuer.info/posts/keyboards/macros/index.html#arrow-macro-types---or
+			if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {  // Is shift held?
+				del_mods(MOD_MASK_SHIFT);  // Temporarily delete shift.
+				del_oneshot_mods(MOD_MASK_SHIFT);
+				SEND_STRING(SS_LGUI(SS_LALT(SS_LCTL("a"))));
+				set_mods(mods);            // Restore mods.
+			} else {
+				SEND_STRING(SS_LGUI(SS_LALT(SS_LCTL(SS_LSFT("a")))));
 			}
-			tap_code(KC_A);
-			unregister_code(KC_LGUI);
-			unregister_code(KC_LALT);
-			unregister_code(KC_LCTL);
-			
-                
-			return false;
-            }
-        
-        return true;
-    }
+		}
 		break;
     }
     return true;
