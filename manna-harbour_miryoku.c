@@ -6,15 +6,6 @@
 
 #include "manna-harbour_miryoku.h"
 
-// The following unicode stuff is dependent on the
-// windows app "WinCompose" is running in the background
-// https://github.com/samhocevar/wincompose
-#define _OE UC(0x00D8) // Ø
-#define _oe UC(0x00F8) // ø
-#define _AE UC(0x00c6) // Æ
-// #define _AA UC(0x00c5) // Å
-#define _ae UC(0x00e6) // æ
-// #define _aa UC(0x00E5) // å
 
 uint16_t my_key_pressed_timer = 0;
 
@@ -45,8 +36,9 @@ enum custom_keycodes {
 	MY_PGDN,
 	MY_GUI_NUM,
 	MY_UNDRDO,
-	_AA,
-	_aa,
+	_AA, // Åå
+	_AE, // æÆ
+	_OE, // øØ
 };
 
 // --------------------------------------------------------------------------------
@@ -242,16 +234,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			}
 		}
 		break;
-		case _aa	:
+		// Nordic caracter stuff is dependent of autotekt or other text expander
+		// https://www.jitbit.com/autotext/
+		case _AA	:
 		if (record->event.pressed) {
 			// https://getreuer.info/posts/keyboards/macros/index.html#arrow-macro-types---or
 			if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {  // Is shift held?
 				del_mods(MOD_MASK_SHIFT);  // Temporarily delete shift.
 				del_oneshot_mods(MOD_MASK_SHIFT);
-				SEND_STRING(SS_LGUI(SS_LALT(SS_LCTL("a"))));
+				SEND_STRING(" -AA"SS_TAP(X_BSPC));
 				set_mods(mods);            // Restore mods.
 			} else {
-				SEND_STRING(SS_LGUI(SS_LALT(SS_LCTL(SS_LSFT("a")))));
+				SEND_STRING(" -aa"SS_TAP(X_BSPC));
+			}
+		}
+		break;
+		case _AE	:
+		if (record->event.pressed) {
+			// https://getreuer.info/posts/keyboards/macros/index.html#arrow-macro-types---or
+			if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {  // Is shift held?
+				del_mods(MOD_MASK_SHIFT);  // Temporarily delete shift.
+				del_oneshot_mods(MOD_MASK_SHIFT);
+				SEND_STRING(" -AE"SS_TAP(X_BSPC));
+				set_mods(mods);            // Restore mods.
+			} else {
+				SEND_STRING(" -ae"SS_TAP(X_BSPC));
+			}
+		}
+		break;
+		case _OE	:
+		if (record->event.pressed) {
+			// https://getreuer.info/posts/keyboards/macros/index.html#arrow-macro-types---or
+			if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {  // Is shift held?
+				del_mods(MOD_MASK_SHIFT);  // Temporarily delete shift.
+				del_oneshot_mods(MOD_MASK_SHIFT);
+				SEND_STRING(" -OE"SS_TAP(X_BSPC));
+				set_mods(mods);            // Restore mods.
+			} else {
+				SEND_STRING(" -oe"SS_TAP(X_BSPC));
 			}
 		}
 		break;
@@ -432,8 +452,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //---------------------------------------------------- START ------------------------------------------------------------------------------------------
   #elif defined MIRYOKU_ALPHAS_QWERTY
     KC_Q,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,               KC_I,              KC_O,             KC_P,
-    LGUI_T(KC_A),      LALT_T(KC_S),      LCTL_T(KC_D),      LSFT_T(KC_F),      KC_G,              KC_H,              LSFT_T(KC_J),      LCTL_T(KC_K),      LALT_T(KC_L),      _oe,
-    KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_LEAD,           _aa,               _ae,
+    LGUI_T(KC_A),      LALT_T(KC_S),      LCTL_T(KC_D),      LSFT_T(KC_F),      KC_G,              KC_H,              LSFT_T(KC_J),      LCTL_T(KC_K),      LALT_T(KC_L),      _OE,
+    KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_LEAD,           _AA,               _AE,
     U_NP,              U_NP,              LT(MEDIA, KC_COMM),LT(NAV, KC_SPC),   LT(MOUSE, KC_DOT), LT(FUN, KC_ENT),   LT(NUM, KC_BSPC),  OSL(SYM),          U_NP,              U_NP
   #else
     KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,
@@ -513,8 +533,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [SYM] = LAYOUT_miryoku(
 	KC_PLUS, KC_EXLM, KC_SCLN, QUOT,    KC_ASTR, KC_CIRC, KC_TILD, KC_HASH, KC_UNDS, KC_AMPR,
-	KC_MINS, KC_QUES, KC_COLN, DQUOT,   KC_SLSH, CURLEY,  PAREN,   BRACKET, KC_DLR,  _OE,
-	KC_PERC, KC_TRNS, KC_TRNS, KC_GRV,  KC_EQL,  KC_RCBR, KC_RPRN, KC_RBRC, _AA,     _AE,
+	KC_MINS, KC_QUES, KC_COLN, DQUOT,   KC_SLSH, CURLEY,  PAREN,   BRACKET, KC_DLR,  KC_DOT,
+	KC_PERC, KC_TRNS, KC_TRNS, KC_GRV,  KC_EQL,  KC_RCBR, KC_RPRN, KC_RBRC, KC_TRNS, KC_TRNS,
 	U_NP,    U_NP,    KC_PIPE, KC_BSLS, KC_LT,   KC_GT,   KC_AT,   TG(SYM), U_NP,    U_NP
   ),
   [FUN] = LAYOUT_miryoku(
