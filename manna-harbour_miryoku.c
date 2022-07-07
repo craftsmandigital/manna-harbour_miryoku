@@ -98,6 +98,7 @@ void matrix_scan_user(void) {
 // --------------------------------------------------------------------------------
 // Macro stuff
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+	
 
     switch (keycode) {
     case PAREN:
@@ -247,11 +248,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				SEND_STRING("-&e");  // Becomes _&e when shifted
 		}
 		break;
-		case _OE	:	// ø Ø
-		if (record->event.pressed) {
-				SEND_STRING("-&o");  // Becomes _&o when shifted
+		// case _OE	:	// ø Ø
+		// if (record->event.pressed) {
+				// SEND_STRING("-&o");  // Becomes _&o when shifted
+		// }
+		// break;
+		case RGUI_T(_OE)	:	// ø Ø
+		// This was extremely difficult to program, because of the nature of GUI modifier
+		// It is also triggered on tap. luckyly the solution was quite easy. The solution was found on website under:
+		// https://github.com/qmk/qmk_firmware/blob/master/docs/mod_tap.md#changing-tap-function.
+		// The moust obious solution was something like the website under. 
+		// But doestnt work because of the nature of the GUI modifier
+		// https://thomasbaart.nl/2018/12/09/qmk-basics-tap-and-hold-actions/#a-workaround-for-mod-tap
+		
+		if (record->tap.count && record->event.pressed) {
+			SEND_STRING("-&o"); // Send KC_DQUO on tap
+			return false;        // Return false to ignore further processing of key
 		}
 		break;
+
     }
     return true;
 };
@@ -429,7 +444,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //---------------------------------------------------- START ------------------------------------------------------------------------------------------
   #elif defined MIRYOKU_ALPHAS_QWERTY
     KC_Q,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,               KC_I,              KC_O,             KC_P,
-    LGUI_T(KC_A),      LALT_T(KC_S),      LCTL_T(KC_D),      LSFT_T(KC_F),      KC_G,              KC_H,              LSFT_T(KC_J),      LCTL_T(KC_K),      LALT_T(KC_L),      _OE,
+    LGUI_T(KC_A),      LALT_T(KC_S),      LCTL_T(KC_D),      LSFT_T(KC_F),      KC_G,              KC_H,              LSFT_T(KC_J),      LCTL_T(KC_K),      LALT_T(KC_L),      RGUI_T(_OE),
     KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_LEAD,           _AA,               _AE,
     U_NP,              U_NP,              LT(MEDIA, KC_COMM),LT(NAV, KC_SPC),   LT(MOUSE, KC_DOT), LT(FUN, KC_ENT),   LT(NUM, KC_BSPC),  OSL(SYM),          U_NP,              U_NP
   #else
