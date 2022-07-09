@@ -12,7 +12,7 @@ Read more on [Miryoku QMK](https://github.com/qmk/qmk_firmware/tree/master/users
 
 This readme is not  part of the content of the orginal miryoku folder
 
-## Compiling
+## Compiling for the Lets'split keyboard
 Here is the command to compile and flash the keyboard layout for the lets'split keyboard:
 - Firs of all move to the root QMK folder: `.../qmk_firmware`
 ```make
@@ -28,9 +28,21 @@ make lets_split:manna-harbour_miryoku:flash \
            MIRYOKU_MAPPING=SPLIT \
            MIRYOKU_ALPHAS=QWERTY \
            MIRYOKU_NAV=VI \
-           MIRYOKU_CLIPBOARD=WIN # lets'split, extended thumbs
+           MIRYOKU_CLIPBOARD=WIN
 ```
 This layout may also fitt other keyboards with the [ortho_4x12 layout](https://github.com/qmk/qmk_firmware/tree/master/users/manna-harbour_miryoku#ortho_4x12). Read the dockumentation for  the [ortho_4x12 layout](https://github.com/qmk/qmk_firmware/tree/master/users/manna-harbour_miryoku#ortho_4x12). Change the first line of the comand to your choice, for compiling the code to your keyboard.
+
+## Compiling for [Dactyl manuform 3x5_3](https://github.com/qmk/qmk_firmware/tree/master/keyboards/handwired/dactyl_manuform#keymaps-3x5_3)
+This keyboard suports the Miriouku layot right out of the box.
+There are some problems, because there are many versions of the keyboard. [Here is a bugfix to compile the simplest version of the keyboard](https://github.com/craftsmandigital/3x5_3).
+Here is the command to compile and flash the keyboard layout for the Dactyl manuform 3x5_3 keyboard:
+```make
+make handwired/dactyl_manuform/3x5_3:manna-harbour_miryoku:flash \
+           MIRYOKU_ALPHAS=QWERTY \
+           MIRYOKU_NAV=VI \
+           MIRYOKU_CLIPBOARD=WIN
+```
+
 
 ## Prerequisites
 
